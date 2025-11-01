@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNBridge - Software Factory</title>
+    <style>
+        :root {
+            --primary-dark: #0a2540;
+            --primary-blue: #00d4ff;
+            --accent-orange: #ff6b35;
+            --light-gray: #f6f9fc;
+            --medium-gray: #e6ebf1;
+            --dark-gray: #425466;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--primary-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo span {
+            color: var(--primary-blue);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 35px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .cta-button {
+            background-color: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+        }
+        
+        .cta-button:hover {
+            background-color: #e55a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+        }
+        
+        /* Hero Section - Privacy.com Style */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a365d 100%);
+            color: var(--white);
+            padding: 180px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--primary-blue);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero-highlight {
+            color: var(--primary-blue);
+        }
+        
+        .hero p {
+            font-size: 22px;
+            max-width: 750px;
+            margin: 0 auto 40px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-blue);
+            color: var(--primary-dark);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
+        }
+        
+        .primary-btn:hover {
+            background-color: #00b8e6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .secondary-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--white);
+            transform: translateY(-3px);
+        }
+        
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            opacity: 0.7;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+        
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .trust-badge i {
+            color: var(--primary-blue);
+            font-size: 20px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.7;
+            }
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        
+        .section-title h2 {
+            font-size: 42px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .section-title p {
+            color: var(--dark-gray);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 35px;
+        }
+        
+        .feature-card {
+            background-color: var(--light-gray);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-orange));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--medium-gray);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .feature-icon i {
+            color: var(--primary-blue);
+            font-size: 28px;
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: var(--dark-gray);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            text-align: center;
+            padding: 45px 30px;
+            border-radius: 16px;
+            transition: all 0.4s;
+            background-color: var(--white);
+            border: 2px solid transparent;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-blue);
+        }
+        
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 107, 53, 0.05));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(255, 107, 53, 0.1));
+        }
+        
+        .service-icon i {
+            color: var(--primary-blue);
+            font-size: 36px;
+        }
+        
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .service-card p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .testimonial-card {
+            background: var(--light-gray);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-blue);
+        }
+        
+        .testimonial-stars {
+            color: var(--accent-orange);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-text {
+            color: var(--primary-dark);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .author-info h4 {
+            font-size: 16px;
+            color: var(--primary-dark);
+            margin-bottom: 3px;
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+        
+        .faq-item {
+            background: var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .faq-item.active {
+            border-color: var(--primary-blue);
+        }
+        
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 17px;
+            color: var(--primary-dark);
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            color: var(--primary-blue);
+        }
+        
+        .faq-question i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+            color: var(--primary-blue);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 0 30px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 30px 25px 30px;
+        }
+        
+        .faq-answer p {
+            color: var(--dark-gray);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a365d 100%);
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section h2 {
+            font-size: 44px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .cta-section p {
+            font-size: 20px;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 70px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 14px;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary-blue);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+        
+        .social-link i {
+            color: white;
+            font-size: 18px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .features-grid, .services-grid, .testimonials-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            nav {
+                width: 100%;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 15px;
+            }
+            
+            .cta-button {
+                margin-top: 15px;
+            }
+            
+            .hero {
+                padding: 140px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 38px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .primary-btn, .secondary-btn {
+                width: 100%;
+            }
+            
+            .section-title h2 {
+                font-size: 32px;
+            }
+            
+            .section-title p {
+                font-size: 16px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-section h2 {
+                font-size: 32px;
+            }
+            
+            .cta-section p {
+                font-size: 18px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .feature-card, .service-card, .testimonial-card {
+                padding: 30px 25px;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">DN<span>Bridge</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#tecnologias">Tecnologías</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i> Soluciones Premium de Software
+            </div>
+            <h1>Transformamos tus <span class="hero-highlight">ideas</span> en software <span class="hero-highlight">innovador</span></h1>
+            <p>DNBridge conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. Creamos software escalable, seguro y de alto rendimiento diseñado para impulsar tu negocio al siguiente nivel.</p>
+            <div class="hero-buttons">
+                <button class="primary-btn">Comenzar Ahora</button>
+                <button class="secondary-btn">Ver Proyectos</button>
+            </div>
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>100% Seguro</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-users"></i>
+                    <span>+250 Clientes Satisfechos</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-award"></i>
+                    <span>Certificados & Premiados</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Por qué elegir DNBridge?</h2>
+                <p>Nuestro enfoque combina experiencia técnica con comprensión empresarial para ofrecer soluciones que realmente importan.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Desarrollo Ágil</h3>
+                    <p>Utilizamos metodologías ágiles para entregar valor rápidamente, con iteraciones constantes y retroalimentación continua.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Integrada</h3>
+                    <p>Implementamos prácticas de seguridad desde el diseño inicial, protegiendo tus datos y los de tus clientes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Experiencias Multiplataforma</h3>
+                    <p>Desarrollamos aplicaciones nativas y web responsivas que funcionan perfectamente en todos los dispositivos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Arquitecturas Escalables</h3>
+                    <p>Diseñamos sistemas que crecen con tu negocio, utilizando las mejores prácticas de arquitectura de software.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Análisis y Optimización</h3>
+                    <p>Integramos analytics y herramientas de monitoreo para medir el rendimiento y optimizar continuamente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Continuo</h3>
+                    <p>Ofrecemos mantenimiento y soporte post-lanzamiento para garantizar el funcionamiento óptimo de tus aplicaciones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Servicios</h2>
+                <p>Ofrecemos un enfoque integral para el desarrollo de software, adaptándonos a las necesidades específicas de cada cliente.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Desarrollo Web</h3>
+                    <p>Aplicaciones web modernas, progresivas y responsivas con las últimas tecnologías.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile"></i>
+                    </div>
+                    <h3>Apps Móviles</h3>
+                    <p>Desarrollo nativo e híbrido para iOS y Android con experiencias de usuario excepcionales.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-pencil-ruler"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Diseño de interfaces intuitivas y experiencias de usuario centradas en el cliente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p>Miles de empresas confían en DNBridge para sus soluciones de software. Aquí está lo que tienen que decir.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"DNBridge transformó completamente nuestra operación digital. Su equipo entendió nuestras necesidades desde el primer día y entregó una solución que superó nuestras expectativas."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>María Rodríguez</h4>
+                            <p>CEO, TechStart Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"La calidad del código y la atención al detalle son excepcionales. Trabajar con DNBridge ha sido una experiencia fluida y profesional de principio a fin."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JG</div>
+                        <div class="author-info">
+                            <h4>Jorge García</h4>
+                            <p>CTO, InnovaSoft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Increíble rapidez y eficiencia. El equipo de DNBridge no solo cumplió con los plazos, sino que también aportó ideas valiosas que mejoraron nuestro producto final."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LP</div>
+                        <div class="author-info">
+                            <h4>Laura Pérez</h4>
+                            <p>Founder, DigitalHub</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Encuentra respuestas a las preguntas más comunes sobre nuestros servicios.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cuánto tiempo toma desarrollar un proyecto?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>El tiempo de desarrollo varía según la complejidad del proyecto. Un sitio web básico puede tomar 2-4 semanas, mientras que una aplicación más compleja puede requerir 2-6 meses. Después de la consulta inicial, te proporcionaremos un cronograma detallado.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Ofrecen soporte después del lanzamiento?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, la mayoria de los proyectos incluyen soporte post-lanzamiento. Dependiendo del proyecto que sea, ofrecemos desde 30 días hasta soporte continuo 24/7 para proyectos Enterprise. También ofrecemos contratos de mantenimiento mensual.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Qué tecnologías utilizan?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Trabajamos con las últimas tecnologías incluyendo React, Angular, Vue.js para frontend; Node.js, Python, Java para backend; y servicios cloud como AWS, Azure y Google Cloud. Seleccionamos la stack tecnológica más adecuada para cada proyecto.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Puedo solicitar cambios durante el desarrollo?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutamente. Utilizamos metodología ágil que permite iteraciones y ajustes continuos. Mantenemos comunicación constante y realizamos revisiones periódicas para asegurarnos de que el proyecto va en la dirección correcta.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Ofrecen garantía en sus servicios?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, ofrecemos garantía de satisfacción. Si encuentras bugs o problemas dentro del período de soporte, los solucionamos sin costo adicional. También garantizamos que el código cumple con los estándares de calidad y mejores prácticas de la industria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container cta-content">
+            <h2>¿Listo para comenzar tu próximo proyecto?</h2>
+            <p>Contáctanos hoy mismo para una reunion y descubre cómo podemos ayudar a hacer realidad tu idea. Nuestro equipo está listo para transformar tu visión en realidad.</p>
+            <button class="primary-btn">Solicitar Reunion</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>DNBridge</h3>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.6;">Conectamos tus ideas con soluciones tecnológicas innovadoras. Transformando visiones en realidad digital.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Servicios</h3>
+                    <ul>
+                        <li><a href="#servicios">Desarrollo Web</a></li>
+                        <li><a href="#servicios">Apps Móviles</a></li>
+                        <li><a href="#servicios">Backend & APIs</a></li>
+                        <li><a href="#servicios">UI/UX Design</a></li>
+                        <li><a href="#servicios">DevOps & Cloud</a></li>
+                        <li><a href="#servicios">Consultoría</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#nosotros">Sobre Nosotros</a></li>
+                        <li><a href="#nosotros">Equipo</a></li>
+                        <li><a href="#proyectos">Proyectos</a></li>
+                        <li><a href="#tecnologias">Tecnologías</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><a href="mailto:info@dnbridge.com"><i class="fas fa-envelope" style="margin-right: 8px;"></i> info@dnbridge.com</a></li>
+                        <li><a href="tel:+1234567890"><i class="fas fa-phone" style="margin-right: 8px;"></i> +1 (234) 567-890</a></li>
+                        <li style="color: rgba(255,255,255,0.7); margin-top: 10px;"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Ciudad, País</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 DNBridge. Todos los derechos reservados. | <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none; margin-left: 10px;">Política de Privacidad</a> | <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none; margin-left: 10px;">Términos de Servicio</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Header background on scroll with enhanced shadow
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+        
+        // FAQ Accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Add scroll animation for elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe cards for scroll animations
+        document.querySelectorAll('.feature-card, .service-card, .testimonial-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+        
+        // Button hover effect enhancement
+        document.querySelectorAll('.primary-btn, .secondary-btn, .cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
