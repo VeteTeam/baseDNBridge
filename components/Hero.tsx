@@ -39,7 +39,7 @@ export default function Hero() {
           >
             Comenzar Ahora
           </button>
-          <button className="bg-transparent text-white border-2 border-white/40 px-10 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:bg-white/10 hover:border-white hover:-translate-y-1">
+          <button className="bg-transparent text-white border-2 border-white/40 px-10 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:bg-color-2/10 hover:border-white hover:-translate-y-1">
             Ver Proyectos
           </button>
         </div>

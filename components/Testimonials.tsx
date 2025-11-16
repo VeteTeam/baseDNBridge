@@ -3,7 +3,7 @@ import type { Testimonial } from '@/config/content'
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-light-gray">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-5">
@@ -19,30 +19,32 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-light-gray rounded-2xl p-8 transition-all duration-300 border-2 border-transparent hover:-translate-y-1 hover:shadow-xl hover:border-primary-blue"
+              className="text-center bg-color-1 p-10 rounded-2xl transition-all duration-400 border-2 border-transparent hover:-translate-y-1 hover:shadow-xl hover:border-primary-blue group"
             >
-              <div className="text-accent-orange text-lg mb-5">
-                {Array.from({ length: testimonial.stars }).map((_, i) => (
-                  <i key={i} className="fas fa-star"></i>
-                ))}
+              <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-primary-blue/10 to-accent-orange/5 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary-blue/20 group-hover:to-accent-orange/10">
+                <div className="text-accent-orange text-2xl">
+                  {Array.from({ length: testimonial.stars }).map((_, i) => (
+                    <i key={i} className="fas fa-star"></i>
+                  ))}
+                </div>
               </div>
 
               <p className="text-primary-dark text-base leading-relaxed mb-6 italic">
                 "{testimonial.text}"
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-blue to-accent-orange flex items-center justify-center text-white font-bold text-lg">
-                  {testimonial.initials}
+              <div className="mt-6">
+                <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-primary-blue/10 to-accent-orange/5 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary-blue/20 group-hover:to-accent-orange/10">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-blue to-accent-orange flex items-center justify-center text-white font-bold text-xl">
+                    {testimonial.initials}
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-base font-semibold text-primary-dark mb-1">
-                    {testimonial.author}
-                  </h4>
-                  <p className="text-sm text-dark-gray">
-                    {testimonial.role}, {testimonial.company}
-                  </p>
-                </div>
+                <h4 className="text-xl font-semibold text-primary-dark mb-1">
+                  {testimonial.author}
+                </h4>
+                <p className="text-dark-gray">
+                  {testimonial.role}, {testimonial.company}
+                </p>
               </div>
             </div>
           ))}
