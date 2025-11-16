@@ -14,6 +14,10 @@ module.exports = {
         'light-gray': '#f6f9fc',
         'medium-gray': '#e6ebf1',
         'dark-gray': '#425466',
+        'cream': '#faf3e0',
+        'color-1': '#E8F8F8',
+        'color-2': '#E8F0F8',
+        'color-3': '#E8E8F8'
       },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],

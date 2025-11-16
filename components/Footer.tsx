@@ -17,7 +17,7 @@ export default function Footer() {
                   href={companyConfig.socialMedia.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
+                  className="w-10 h-10 rounded-full bg-color-2/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
                 >
                   <i className="fab fa-linkedin-in text-white"></i>
                 </a>
@@ -27,7 +27,7 @@ export default function Footer() {
                   href={companyConfig.socialMedia.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
+                  className="w-10 h-10 rounded-full bg-color-2/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
                 >
                   <i className="fab fa-twitter text-white"></i>
                 </a>
@@ -37,7 +37,7 @@ export default function Footer() {
                   href={companyConfig.socialMedia.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
+                  className="w-10 h-10 rounded-full bg-color-2/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
                 >
                   <i className="fab fa-github text-white"></i>
                 </a>
@@ -47,7 +47,7 @@ export default function Footer() {
                   href={companyConfig.socialMedia.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
+                  className="w-10 h-10 rounded-full bg-color-2/10 flex items-center justify-center transition-all duration-300 hover:bg-primary-blue hover:-translate-y-1"
                 >
                   <i className="fab fa-instagram text-white"></i>
                 </a>

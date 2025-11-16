@@ -34,7 +34,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 w-full bg-white z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full bg-color-2 z-50 transition-all duration-300 ${
         scrolled ? 'shadow-lg' : 'shadow-sm'
       }`}
     >

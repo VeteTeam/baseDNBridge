@@ -139,7 +139,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
           {...register('projectType')}
           className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
             errors.projectType ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
-          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-white`}
+          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-color-1`}
         >
           <option value="">Selecciona un tipo</option>
           <option value="Health Tech">Health Tech</option>
@@ -176,7 +176,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         <select
           id="budget"
           {...register('budget')}
-          className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-white"
+          className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-light-gray"
         >
           <option value="">Selecciona un rango</option>
           <option value="under-10k">Menos de $10,000</option>

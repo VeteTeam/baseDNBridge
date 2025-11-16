@@ -62,9 +62,9 @@ export default function ContactModal({ isOpen, onClose, onSubmit }: ContactModal
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-fade-in-up">
+      <div className="relative bg-color-1 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-fade-in-up">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b-2 border-medium-gray px-6 py-4 flex justify-between items-center">
+        <div className="sticky top-0 bg-color-1 border-b-2 border-medium-gray px-6 py-4 flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-bold text-primary-dark">Contactanos</h2>
             <p className="text-sm text-dark-gray mt-1">

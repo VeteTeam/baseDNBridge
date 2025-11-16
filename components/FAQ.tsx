@@ -11,7 +11,7 @@ export default function FAQ() {
   }
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-color-3">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-5">

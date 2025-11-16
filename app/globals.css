@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-white text-primary-dark;
+    @apply bg-color-1 text-primary-dark;
     overflow-x: hidden;
   }
 }
