@@ -168,26 +168,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>}
       </div>
 
-      {/* Presupuesto (Opcional) */}
-      <div>
-        <label htmlFor="budget" className="block text-sm font-medium text-primary-dark mb-2">
-          Presupuesto estimado (opcional)
-        </label>
-        <select
-          id="budget"
-          {...register('budget')}
-          className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-light-gray"
-        >
-          <option value="">Selecciona un rango</option>
-          <option value="under-10k">Menos de $10,000</option>
-          <option value="10k-50k">$10,000 - $50,000</option>
-          <option value="50k-100k">$50,000 - $100,000</option>
-          <option value="over-100k">Más de $100,000</option>
-          <option value="discuss">Prefiero discutirlo</option>
-        </select>
-      </div>
-
-      {/* Error del servidor */}
       {submitError && (
         <div className="p-4 bg-red-50 border-2 border-red-500 rounded-lg">
           <p className="text-sm text-red-600">{submitError}</p>
