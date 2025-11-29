@@ -31,6 +31,10 @@ const createTransporter = () => {
     tls: {
       rejectUnauthorized: false, // Útil en desarrollo, considera true en producción
     },
+    // 🎯 Agregar timeouts para evitar que se cuelgue
+    connectionTimeout: 10000, // 10 segundos para conectar
+    greetingTimeout: 10000, // 10 segundos para el saludo SMTP
+    socketTimeout: 10000, // 10 segundos para operaciones de socket
   })
 }
 
@@ -69,7 +73,9 @@ export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
 
   try {
     console.log('[EMAIL] Enviando email a través de SMTP...')
-    const info = await mailTransporter.sendMail({
+    
+    // 🎯 Agregar timeout al envío (15 segundos máximo)
+    const sendPromise = mailTransporter.sendMail({
       from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`, // Remitente
       to: notificationConfig.teamEmail, // Destinatario (tu equipo)
       replyTo: leadData.email, // Para que puedas responder directamente al lead
@@ -78,6 +84,12 @@ export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
       // Opcional: versión en texto plano para clientes de email que no soportan HTML
       text: generateLeadEmailText(leadData),
     })
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout: El envío de email tardó más de 15 segundos')), 15000)
+    })
+
+    const info = await Promise.race([sendPromise, timeoutPromise]) as any
 
     console.log('[EMAIL] ✅ Email de notificación enviado:', info.messageId)
     console.log('[EMAIL] Response:', JSON.stringify(info, null, 2))
@@ -110,13 +122,21 @@ export async function sendConfirmationEmailToLead(leadData: LeadEmailData) {
 
   try {
     console.log('[EMAIL] Enviando email a través de SMTP...')
-    const info = await mailTransporter.sendMail({
+    
+    // 🎯 Agregar timeout al envío (15 segundos máximo)
+    const sendPromise = mailTransporter.sendMail({
       from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`,
       to: leadData.email, // Email del cliente que llenó el formulario
       subject: 'Gracias por contactarnos - DNBridge',
       html: generateConfirmationEmailHTML(leadData),
       text: generateConfirmationEmailText(leadData),
     })
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout: El envío de email tardó más de 15 segundos')), 15000)
+    })
+
+    const info = await Promise.race([sendPromise, timeoutPromise]) as any
 
     console.log('[EMAIL] ✅ Email de confirmación enviado:', info.messageId)
     return info
