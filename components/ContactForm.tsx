@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useState } from 'react'
+import { useToast } from '@/contexts/ToastContext'
 
 // Schema de validación con Zod
 const contactSchema = z.object({
@@ -30,6 +31,7 @@ interface ContactFormProps {
 export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const { showToast } = useToast()
 
   const {
     register,
@@ -46,11 +48,24 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
       setSubmitError(null)
       await onSubmit(data)
       reset()
+      
+      // 🎯 Mostrar notificación de éxito
+      showToast(
+        '¡Mensaje enviado exitosamente! Te responderemos pronto.',
+        'success',
+        5000
+      )
+      
       onSuccess?.()
     } catch (error) {
-      setSubmitError(
-        error instanceof Error ? error.message : 'Error al enviar el formulario. Por favor intenta de nuevo.'
-      )
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Error al enviar el formulario. Por favor intenta de nuevo.'
+      
+      setSubmitError(errorMessage)
+      
+      // 🎯 Mostrar notificación de error
+      showToast(errorMessage, 'error', 6000)
     } finally {
       setIsSubmitting(false)
     }

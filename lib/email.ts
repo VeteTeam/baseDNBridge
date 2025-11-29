@@ -1,8 +1,41 @@
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import { companyConfig, notificationConfig } from '@/config/company'
 
-// Inicializar Resend solo si hay API key
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+// 🎯 Purpose: Configurar el transporter de nodemailer para Gmail SMTP
+// 🏗️ Architecture: Singleton pattern para reutilizar la conexión SMTP
+// 🔧 Support Notes: Las credenciales vienen de variables de entorno por seguridad
+
+// Crear transporter de nodemailer con configuración de Gmail
+const createTransporter = () => {
+  // Validar que tenemos las credenciales necesarias
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.warn('⚠️ GMAIL_USER o GMAIL_APP_PASSWORD no están configuradas. Emails no se enviarán.')
+    return null
+  }
+
+  return nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true para 465, false para otros puertos
+    auth: {
+      user: process.env.GMAIL_USER, // Tu email de Gmail completo
+      pass: process.env.GMAIL_APP_PASSWORD, // Contraseña de aplicación (16 caracteres)
+    },
+    // Opciones adicionales para mejor compatibilidad
+    tls: {
+      rejectUnauthorized: false, // Útil en desarrollo, considera true en producción
+    },
+  })
+}
+
+// Singleton: crear transporter una sola vez y reutilizarlo
+let transporter: nodemailer.Transporter | null = null
+
+const getTransporter = () => {
+  transporter ??= createTransporter()
+  return transporter
+}
 
 interface LeadEmailData {
   name: string
@@ -15,66 +48,120 @@ interface LeadEmailData {
 }
 
 /**
- * Envía email de notificación al equipo cuando llega un nuevo lead
+ * 🎯 Purpose: Envía email de notificación al equipo cuando llega un nuevo lead
+ * 🏗️ Architecture: Usa nodemailer con Gmail SMTP
+ * 🔧 Support Notes: Si falla, registra el error pero no bloquea la respuesta del API
  */
 export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
-  if (!resend || !process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY no está configurada. Email no enviado.')
+  const mailTransporter = getTransporter()
+  
+  if (!mailTransporter) {
+    console.warn('⚠️ Transporter de email no disponible. Email no enviado.')
     return null
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: `DNBridge <${notificationConfig.autoReplyEmail || 'noreply@dnbridge.com'}>`,
-      to: [notificationConfig.teamEmail],
+    const info = await mailTransporter.sendMail({
+      from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`, // Remitente
+      to: notificationConfig.teamEmail, // Destinatario (tu equipo)
+      replyTo: leadData.email, // Para que puedas responder directamente al lead
       subject: `🎯 Nuevo Lead: ${leadData.name} - ${leadData.projectType}`,
       html: generateLeadEmailHTML(leadData),
-      reply_to: leadData.email,
+      // Opcional: versión en texto plano para clientes de email que no soportan HTML
+      text: generateLeadEmailText(leadData),
     })
 
-    if (error) {
-      console.error('Error al enviar email de notificación:', error)
-      throw error
-    }
-
-    return data
+    console.log('✅ Email de notificación enviado:', info.messageId)
+    return info
   } catch (error) {
-    console.error('Error en sendLeadNotificationEmail:', error)
+    console.error('❌ Error en sendLeadNotificationEmail:', error)
     throw error
   }
 }
 
 /**
- * Envía email de confirmación al cliente
+ * 🎯 Purpose: Envía email de confirmación al cliente
+ * 🏗️ Architecture: Usa nodemailer con Gmail SMTP
+ * 🔧 Support Notes: Email automático de confirmación para mejorar UX
  */
 export async function sendConfirmationEmailToLead(leadData: LeadEmailData) {
-  if (!resend || !process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY no está configurada. Email no enviado.')
+  const mailTransporter = getTransporter()
+  
+  if (!mailTransporter) {
+    console.warn('⚠️ Transporter de email no disponible. Email no enviado.')
     return null
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: `${companyConfig.name} <${notificationConfig.autoReplyEmail || 'noreply@dnbridge.com'}>`,
-      to: [leadData.email],
+    const info = await mailTransporter.sendMail({
+      from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`,
+      to: leadData.email, // Email del cliente que llenó el formulario
       subject: 'Gracias por contactarnos - DNBridge',
       html: generateConfirmationEmailHTML(leadData),
+      text: generateConfirmationEmailText(leadData),
     })
 
-    if (error) {
-      console.error('Error al enviar email de confirmación:', error)
-      throw error
-    }
-
-    return data
+    console.log('✅ Email de confirmación enviado:', info.messageId)
+    return info
   } catch (error) {
-    console.error('Error en sendConfirmationEmailToLead:', error)
+    console.error('❌ Error en sendConfirmationEmailToLead:', error)
     throw error
   }
 }
 
 /**
- * Genera el HTML del email de notificación para el equipo
+ * 🎯 Purpose: Genera versión en texto plano del email (fallback para clientes sin HTML)
+ * 💡 Learning: Siempre incluir versión texto plano mejora la compatibilidad
+ */
+function generateLeadEmailText(leadData: LeadEmailData): string {
+  return `
+🎯 Nuevo Lead Recibido
+
+Un nuevo cliente potencial se ha contactado:
+
+Nombre: ${leadData.name}
+Email: ${leadData.email}
+${leadData.phone ? `Teléfono: ${leadData.phone}` : ''}
+${leadData.company ? `Empresa: ${leadData.company}` : ''}
+Tipo de Proyecto: ${leadData.projectType}
+${leadData.budget ? `Presupuesto: ${leadData.budget}` : ''}
+
+Mensaje:
+${leadData.message}
+
+---
+Este email fue generado automáticamente por el sistema de DNBridge.
+  `.trim()
+}
+
+/**
+ * 🎯 Purpose: Genera versión en texto plano del email de confirmación
+ */
+function generateConfirmationEmailText(leadData: LeadEmailData): string {
+  return `
+¡Gracias por contactarnos!
+
+Hola ${leadData.name},
+
+Gracias por contactar a DNBridge. Hemos recibido tu solicitud y nos pondremos en contacto contigo pronto.
+
+Tipo de proyecto: ${leadData.projectType}
+Mensaje: ${leadData.message}
+
+Nuestro equipo revisará tu solicitud y te contactará en las próximas 24-48 horas.
+
+Si tienes alguna pregunta urgente, no dudes en contactarnos directamente:
+Email: ${companyConfig.email}
+Teléfono: ${companyConfig.phone}
+
+Saludos cordiales,
+El equipo de DNBridge
+  `.trim()
+}
+
+/**
+ * 🎯 Purpose: Genera el HTML del email de notificación para el equipo
+ * 💡 Learning: Mantenemos el mismo diseño visual que tenías con Resend
  */
 function generateLeadEmailHTML(leadData: LeadEmailData): string {
   return `
@@ -176,7 +263,7 @@ function generateLeadEmailHTML(leadData: LeadEmailData): string {
           
           <div class="field">
             <div class="field-label">Mensaje</div>
-            <div class="field-value">${leadData.message.replace(/\n/g, '<br>')}</div>
+            <div class="field-value">${leadData.message.replaceAll('\n', '<br>')}</div>
           </div>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e6ebf1; text-align: center;">
@@ -192,7 +279,7 @@ function generateLeadEmailHTML(leadData: LeadEmailData): string {
 }
 
 /**
- * Genera el HTML del email de confirmación para el cliente
+ * 🎯 Purpose: Genera el HTML del email de confirmación para el cliente
  */
 function generateConfirmationEmailHTML(leadData: LeadEmailData): string {
   return `
@@ -276,4 +363,3 @@ function generateConfirmationEmailHTML(leadData: LeadEmailData): string {
     </html>
   `
 }
-

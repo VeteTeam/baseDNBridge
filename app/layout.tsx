@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ToastProvider } from '@/contexts/ToastContext'
+import { ToastContainer } from '@/components/ToastContainer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,11 +11,11 @@ export const metadata: Metadata = {
   description: 'DNBridge conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. Especialistas en Health Tech y desarrollo de software escalable.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+interface RootLayoutProps {
+  readonly children: React.ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es">
       <head>
@@ -22,7 +24,12 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ToastProvider>
+          {children}
+          <ToastContainer />
+        </ToastProvider>
+      </body>
     </html>
   )
 }

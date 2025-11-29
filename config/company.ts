@@ -18,7 +18,7 @@ export interface CompanyConfig {
 
 export const companyConfig: CompanyConfig = {
   name: 'DNBridge',
-  email: 'info@dnbridge.com',
+  email: 'dnbridgedevs@gmail.com', // Email público de contacto (se muestra en footer y emails)
   phone: '+1 (234) 567-890',
   address: 'Ciudad, País',
   socialMedia: {
@@ -33,9 +33,9 @@ export const companyConfig: CompanyConfig = {
  * Configuración de notificaciones
  */
 export const notificationConfig = {
-  // Email donde llegan las notificaciones de nuevos leads
-  teamEmail: 'info@dnbridge.com',
-  // Email de respuesta automática (opcional)
-  autoReplyEmail: 'noreply@dnbridge.com',
+  // Email donde llegan las notificaciones de nuevos leads (tu bandeja de entrada)
+  teamEmail: 'dnbridgedevs@gmail.com',
+  // Email de respuesta automática (ya no se usa con Gmail SMTP, pero se mantiene por compatibilidad)
+  autoReplyEmail: 'dnbridgedevs@gmail.com',
 }
 
