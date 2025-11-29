@@ -88,8 +88,8 @@ export async function POST(request: NextRequest) {
       gmailUserValue: process.env.GMAIL_USER || 'NO CONFIGURADO',
     })
 
-    // Enviar emails de forma asíncrona (no bloqueamos la respuesta)
-    Promise.all([
+    // Enviar emails - esperamos un poco para que se completen antes de retornar
+    const emailPromises = Promise.all([
       sendLeadNotificationEmail({
         name: validatedData.name,
         email: validatedData.email,
@@ -105,6 +105,7 @@ export async function POST(request: NextRequest) {
           } else {
             console.warn('[CONTACT API] ⚠️ Email de notificación retornó null (transporter no disponible)')
           }
+          return result
         })
         .catch((error) => {
           console.error('[CONTACT API] ❌ Error al enviar email de notificación:', error)
@@ -112,8 +113,8 @@ export async function POST(request: NextRequest) {
             console.error('[CONTACT API] Error message:', error.message)
             console.error('[CONTACT API] Error stack:', error.stack)
           }
+          return null
         }),
-      // Email de confirmación al cliente (opcional, puedes comentarlo si no quieres enviarlo)
       sendConfirmationEmailToLead({
         name: validatedData.name,
         email: validatedData.email,
@@ -129,6 +130,7 @@ export async function POST(request: NextRequest) {
           } else {
             console.warn('[CONTACT API] ⚠️ Email de confirmación retornó null (transporter no disponible)')
           }
+          return result
         })
         .catch((error) => {
           console.error('[CONTACT API] ❌ Error al enviar email de confirmación:', error)
@@ -136,12 +138,25 @@ export async function POST(request: NextRequest) {
             console.error('[CONTACT API] Error message:', error.message)
             console.error('[CONTACT API] Error stack:', error.stack)
           }
+          return null
         }),
     ]).catch((error) => {
       console.error('[CONTACT API] ❌ Error crítico en el proceso de emails:', error)
+      return [null, null]
     })
 
-    console.log('[CONTACT API] Proceso de emails iniciado (asíncrono)')
+    // 🎯 Esperar máximo 3 segundos para que los emails se envíen
+    // Si tardan más, retornamos igual para no hacer la respuesta muy lenta
+    const timeoutPromise = new Promise((resolve) => {
+      setTimeout(() => resolve([null, null]), 3000)
+    })
+
+    try {
+      await Promise.race([emailPromises, timeoutPromise])
+      console.log('[CONTACT API] Proceso de emails completado o timeout alcanzado')
+    } catch (error) {
+      console.error('[CONTACT API] Error inesperado esperando emails:', error)
+    }
 
     return NextResponse.json(
       {
