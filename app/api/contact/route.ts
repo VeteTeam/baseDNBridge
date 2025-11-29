@@ -80,14 +80,6 @@ export async function POST(request: NextRequest) {
       lead = null
     }
 
-    // 🎯 Logging mejorado para debugging en producción
-    console.log('[CONTACT API] Iniciando envío de emails...')
-    console.log('[CONTACT API] Variables de entorno:', {
-      hasGmailUser: !!process.env.GMAIL_USER,
-      hasGmailPassword: !!process.env.GMAIL_APP_PASSWORD,
-      gmailUserValue: process.env.GMAIL_USER || 'NO CONFIGURADO',
-    })
-
     // Enviar emails - esperamos un poco para que se completen antes de retornar
     const emailPromises = Promise.all([
       sendLeadNotificationEmail({
@@ -109,10 +101,6 @@ export async function POST(request: NextRequest) {
         })
         .catch((error) => {
           console.error('[CONTACT API] ❌ Error al enviar email de notificación:', error)
-          if (error instanceof Error) {
-            console.error('[CONTACT API] Error message:', error.message)
-            console.error('[CONTACT API] Error stack:', error.stack)
-          }
           return null
         }),
       sendConfirmationEmailToLead({
@@ -134,10 +122,6 @@ export async function POST(request: NextRequest) {
         })
         .catch((error) => {
           console.error('[CONTACT API] ❌ Error al enviar email de confirmación:', error)
-          if (error instanceof Error) {
-            console.error('[CONTACT API] Error message:', error.message)
-            console.error('[CONTACT API] Error stack:', error.stack)
-          }
           return null
         }),
     ]).catch((error) => {
@@ -153,7 +137,6 @@ export async function POST(request: NextRequest) {
 
     try {
       await Promise.race([emailPromises, timeoutPromise])
-      console.log('[CONTACT API] Proceso de emails completado o timeout alcanzado')
     } catch (error) {
       console.error('[CONTACT API] Error inesperado esperando emails:', error)
     }
