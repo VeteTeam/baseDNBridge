@@ -9,9 +9,14 @@ import { companyConfig, notificationConfig } from '@/config/company'
 const createTransporter = () => {
   // Validar que tenemos las credenciales necesarias
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.warn('⚠️ GMAIL_USER o GMAIL_APP_PASSWORD no están configuradas. Emails no se enviarán.')
+    console.warn('[EMAIL] ⚠️ GMAIL_USER o GMAIL_APP_PASSWORD no están configuradas. Emails no se enviarán.')
+    console.warn('[EMAIL] GMAIL_USER:', process.env.GMAIL_USER ? 'Configurado' : 'NO CONFIGURADO')
+    console.warn('[EMAIL] GMAIL_APP_PASSWORD:', process.env.GMAIL_APP_PASSWORD ? 'Configurado' : 'NO CONFIGURADO')
     return null
   }
+
+  console.log('[EMAIL] ✅ Creando transporter de Gmail SMTP')
+  console.log('[EMAIL] Gmail User:', process.env.GMAIL_USER)
 
   return nodemailer.createTransport({
     service: 'gmail',
@@ -53,14 +58,17 @@ interface LeadEmailData {
  * 🔧 Support Notes: Si falla, registra el error pero no bloquea la respuesta del API
  */
 export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
+  console.log('[EMAIL] 📧 Intentando enviar email de notificación a:', notificationConfig.teamEmail)
+  
   const mailTransporter = getTransporter()
   
   if (!mailTransporter) {
-    console.warn('⚠️ Transporter de email no disponible. Email no enviado.')
+    console.warn('[EMAIL] ⚠️ Transporter de email no disponible. Email no enviado.')
     return null
   }
 
   try {
+    console.log('[EMAIL] Enviando email a través de SMTP...')
     const info = await mailTransporter.sendMail({
       from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`, // Remitente
       to: notificationConfig.teamEmail, // Destinatario (tu equipo)
@@ -71,10 +79,16 @@ export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
       text: generateLeadEmailText(leadData),
     })
 
-    console.log('✅ Email de notificación enviado:', info.messageId)
+    console.log('[EMAIL] ✅ Email de notificación enviado:', info.messageId)
+    console.log('[EMAIL] Response:', JSON.stringify(info, null, 2))
     return info
   } catch (error) {
-    console.error('❌ Error en sendLeadNotificationEmail:', error)
+    console.error('[EMAIL] ❌ Error en sendLeadNotificationEmail:', error)
+    if (error instanceof Error) {
+      console.error('[EMAIL] Error message:', error.message)
+      console.error('[EMAIL] Error code:', (error as any).code)
+      console.error('[EMAIL] Error response:', (error as any).response)
+    }
     throw error
   }
 }
@@ -85,14 +99,17 @@ export async function sendLeadNotificationEmail(leadData: LeadEmailData) {
  * 🔧 Support Notes: Email automático de confirmación para mejorar UX
  */
 export async function sendConfirmationEmailToLead(leadData: LeadEmailData) {
+  console.log('[EMAIL] 📧 Intentando enviar email de confirmación a:', leadData.email)
+  
   const mailTransporter = getTransporter()
   
   if (!mailTransporter) {
-    console.warn('⚠️ Transporter de email no disponible. Email no enviado.')
+    console.warn('[EMAIL] ⚠️ Transporter de email no disponible. Email no enviado.')
     return null
   }
 
   try {
+    console.log('[EMAIL] Enviando email a través de SMTP...')
     const info = await mailTransporter.sendMail({
       from: `"${companyConfig.name}" <${process.env.GMAIL_USER}>`,
       to: leadData.email, // Email del cliente que llenó el formulario
@@ -101,10 +118,14 @@ export async function sendConfirmationEmailToLead(leadData: LeadEmailData) {
       text: generateConfirmationEmailText(leadData),
     })
 
-    console.log('✅ Email de confirmación enviado:', info.messageId)
+    console.log('[EMAIL] ✅ Email de confirmación enviado:', info.messageId)
     return info
   } catch (error) {
-    console.error('❌ Error en sendConfirmationEmailToLead:', error)
+    console.error('[EMAIL] ❌ Error en sendConfirmationEmailToLead:', error)
+    if (error instanceof Error) {
+      console.error('[EMAIL] Error message:', error.message)
+      console.error('[EMAIL] Error code:', (error as any).code)
+    }
     throw error
   }
 }

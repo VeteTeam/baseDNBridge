@@ -80,6 +80,14 @@ export async function POST(request: NextRequest) {
       lead = null
     }
 
+    // 🎯 Logging mejorado para debugging en producción
+    console.log('[CONTACT API] Iniciando envío de emails...')
+    console.log('[CONTACT API] Variables de entorno:', {
+      hasGmailUser: !!process.env.GMAIL_USER,
+      hasGmailPassword: !!process.env.GMAIL_APP_PASSWORD,
+      gmailUserValue: process.env.GMAIL_USER || 'NO CONFIGURADO',
+    })
+
     // Enviar emails de forma asíncrona (no bloqueamos la respuesta)
     Promise.all([
       sendLeadNotificationEmail({
@@ -90,9 +98,21 @@ export async function POST(request: NextRequest) {
         projectType: validatedData.projectType,
         message: validatedData.message,
         budget: validatedData.budget,
-      }).catch((error) => {
-        console.error('Error al enviar email de notificación:', error)
-      }),
+      })
+        .then((result) => {
+          if (result) {
+            console.log('[CONTACT API] ✅ Email de notificación enviado exitosamente:', result.messageId)
+          } else {
+            console.warn('[CONTACT API] ⚠️ Email de notificación retornó null (transporter no disponible)')
+          }
+        })
+        .catch((error) => {
+          console.error('[CONTACT API] ❌ Error al enviar email de notificación:', error)
+          if (error instanceof Error) {
+            console.error('[CONTACT API] Error message:', error.message)
+            console.error('[CONTACT API] Error stack:', error.stack)
+          }
+        }),
       // Email de confirmación al cliente (opcional, puedes comentarlo si no quieres enviarlo)
       sendConfirmationEmailToLead({
         name: validatedData.name,
@@ -102,12 +122,26 @@ export async function POST(request: NextRequest) {
         projectType: validatedData.projectType,
         message: validatedData.message,
         budget: validatedData.budget,
-      }).catch((error) => {
-        console.error('Error al enviar email de confirmación:', error)
-      }),
+      })
+        .then((result) => {
+          if (result) {
+            console.log('[CONTACT API] ✅ Email de confirmación enviado exitosamente:', result.messageId)
+          } else {
+            console.warn('[CONTACT API] ⚠️ Email de confirmación retornó null (transporter no disponible)')
+          }
+        })
+        .catch((error) => {
+          console.error('[CONTACT API] ❌ Error al enviar email de confirmación:', error)
+          if (error instanceof Error) {
+            console.error('[CONTACT API] Error message:', error.message)
+            console.error('[CONTACT API] Error stack:', error.stack)
+          }
+        }),
     ]).catch((error) => {
-      console.error('Error en el proceso de emails:', error)
+      console.error('[CONTACT API] ❌ Error crítico en el proceso de emails:', error)
     })
+
+    console.log('[CONTACT API] Proceso de emails iniciado (asíncrono)')
 
     return NextResponse.json(
       {
