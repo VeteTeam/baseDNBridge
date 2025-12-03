@@ -91,7 +91,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
           type="text"
           id="name"
           {...register('name')}
-          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors text-black ${
             errors.name ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
           } focus:outline-none focus:ring-2 focus:ring-primary-blue/20`}
           placeholder="Juan Pérez"
@@ -108,7 +108,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
           type="email"
           id="email"
           {...register('email')}
-          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors text-black ${
             errors.email ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
           } focus:outline-none focus:ring-2 focus:ring-primary-blue/20`}
           placeholder="juan@empresa.com"
@@ -126,7 +126,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
             type="tel"
             id="phone"
             {...register('phone')}
-            className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20"
+            className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20 text-black"
             placeholder="+1 (234) 567-890"
           />
         </div>
@@ -138,7 +138,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
             type="text"
             id="company"
             {...register('company')}
-            className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20"
+            className="w-full px-4 py-3 rounded-lg border-2 border-medium-gray focus:border-primary-blue focus:outline-none focus:ring-2 focus:ring-primary-blue/20 text-black"
             placeholder="Mi Empresa S.A."
           />
         </div>
@@ -152,14 +152,14 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         <select
           id="projectType"
           {...register('projectType')}
-          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors ${
+          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors text-black ${
             errors.projectType ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
-          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-color-1`}
+          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-white`}
         >
-          <option value="">Selecciona un tipo</option>
-          <option value="Health Tech">Health Tech</option>
-          <option value="General">General</option>
-          <option value="Other">Otro</option>
+          <option value="" className="text-black">Selecciona un tipo</option>
+          <option value="Health Tech" className="text-black">Health Tech</option>
+          <option value="General" className="text-black">General</option>
+          <option value="Other" className="text-black">Otro</option>
         </select>
         {errors.projectType && (
           <p className="mt-1 text-sm text-red-500">{errors.projectType.message}</p>
@@ -175,7 +175,7 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
           id="message"
           rows={5}
           {...register('message')}
-          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors resize-none ${
+          className={`w-full px-4 py-3 rounded-lg border-2 transition-colors resize-none text-black ${
             errors.message ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
           } focus:outline-none focus:ring-2 focus:ring-primary-blue/20`}
           placeholder="Cuéntanos sobre tu proyecto..."
