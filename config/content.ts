@@ -29,6 +29,10 @@ export interface Feature {
   description: string
 }
 
+export interface Technology {
+  name: string
+}
+
 // Testimonios
 export const testimonials: Testimonial[] = [
   {
@@ -100,7 +104,7 @@ export const services: Service[] = [
       'Aplicaciones web modernas, progresivas y responsivas con las últimas tecnologías. Especializados en plataformas de salud digital.',
   },
   {
-    icon: 'fas fa-mobile',
+    icon: 'fas fa-mobile-screen-button',
     title: 'Apps Móviles',
     description:
       'Desarrollo nativo e híbrido para iOS y Android con experiencias de usuario excepcionales. Apps de telemedicina y gestión de salud.',
@@ -169,5 +173,26 @@ export const features: Feature[] = [
     description:
       'Ofrecemos mantenimiento y soporte post-lanzamiento para garantizar el funcionamiento óptimo de tus aplicaciones.',
   },
+]
+
+// Tecnologías
+export const technologies: Technology[] = [
+  { name: 'JAVA' },
+  { name: 'FLUTTER' },
+  { name: 'NEXT.JS' },
+  { name: 'KAFKA' },
+  { name: 'SANITY' },
+  { name: 'ANGULAR' },
+  { name: 'BEDROCK' },
+  { name: 'OPENAI' },
+  { name: 'PYTHON' },
+  { name: 'REACT' },
+  { name: 'GOLANG' },
+  { name: 'DOCKER' },
+  { name: 'NODE.JS' },
+  { name: '.NET' },
+  { name: 'CANVAS' },
+  { name: 'AWS' },
+  { name: 'GITHUB' },
 ]
 
