@@ -14,6 +14,11 @@ const nextConfig = {
         tls: false,
       }
     }
+    // 🔧 Asegurar que los path aliases se resuelvan correctamente
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname),
+    }
     return config
   },
 }
