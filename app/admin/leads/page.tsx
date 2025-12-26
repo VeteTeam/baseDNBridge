@@ -22,12 +22,19 @@ export default async function LeadsPage() {
   }
 
   // 📊 Obtener leads iniciales (primera página)
-  const leads = await prisma.lead.findMany({
+  const leadsData = await prisma.lead.findMany({
     orderBy: {
       createdAt: 'desc',
     },
     take: 50, // Primeros 50 leads
   })
+
+  // 🔄 Convertir fechas Date a strings para el componente
+  const leads = leadsData.map((lead) => ({
+    ...lead,
+    createdAt: lead.createdAt.toISOString(),
+    updatedAt: lead.updatedAt.toISOString(),
+  }))
 
   const total = await prisma.lead.count()
 
