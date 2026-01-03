@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="container-custom relative z-10">
         <div className="inline-block bg-primary-blue/15 text-primary-blue px-5 py-2 rounded-full text-sm font-semibold mb-8 border border-primary-blue/30 animate-fade-in-down">
           <i className="fas fa-star mr-2"></i>
-          Soluciones Premium de Software
+          Soluciones de Vanguardia en Software
         </div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
@@ -27,9 +27,9 @@ export default function Hero() {
         </h1>
 
         <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-white/85 leading-relaxed animate-fade-in-up delay-200">
-          DNBridge conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. 
-          Especialistas en <strong className="text-primary-blue">Health Tech</strong> y desarrollo de software 
-          escalable, seguro y de alto rendimiento diseñado para impulsar tu negocio al siguiente nivel.
+          <strong className="text-primary-blue">DNBridge</strong> conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. 
+          Trabajamos con las últimas tecnologías para ofrecer soluciones robustas y escalables, adaptándonos a las necesidades de cada proyecto.
+          Encaramos los desarrollos creando frameworks y marcos de trabajos especificos para cada proyecto
         </p>
 
         <div className="flex flex-col sm:flex-row gap-5 justify-center mb-12 animate-fade-in-up delay-400">

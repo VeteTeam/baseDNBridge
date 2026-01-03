@@ -66,7 +66,7 @@ export const faqs: FAQItem[] = [
   {
     question: '¿Cuánto tiempo toma desarrollar un proyecto?',
     answer:
-      'El tiempo de desarrollo varía según la complejidad del proyecto. Un sitio web básico puede tomar 2-4 semanas, mientras que una aplicación más compleja de Health Tech puede requerir 2-6 meses. Después de la consulta inicial, te proporcionaremos un cronograma detallado.',
+      'El tiempo de desarrollo varía según la complejidad del proyecto. Un sitio web básico puede tomar 2-4 semanas mientras que una aplicación con multiples funcionalidades puede tomar 2-6 meses. Después de la consulta inicial, te proporcionaremos un cronograma detallado.',
   },
   {
     question: '¿Ofrecen soporte después del lanzamiento?',
@@ -76,7 +76,7 @@ export const faqs: FAQItem[] = [
   {
     question: '¿Qué tecnologías utilizan?',
     answer:
-      'Trabajamos con las últimas tecnologías incluyendo React, Angular, Vue.js para frontend; Node.js, Python, Java para backend; y servicios cloud como AWS, Azure y Google Cloud. Para Health Tech, manejamos HL7/FHIR, integración con dispositivos médicos y sistemas EHR. Seleccionamos la stack tecnológica más adecuada para cada proyecto.',
+      'Trabajamos con las últimas tecnologías incluyendo React, Angular, Vue.js para frontend; Node.js, Python, Java para backend; y servicios cloud como AWS, Azure y Google Cloud. Seleccionamos el stack tecnológico más adecuado para cada proyecto.',
   },
   {
     question: '¿Puedo solicitar cambios durante el desarrollo?',
@@ -86,13 +86,9 @@ export const faqs: FAQItem[] = [
   {
     question: '¿Ofrecen garantía en sus servicios?',
     answer:
-      'Sí, ofrecemos garantía de satisfacción. Si encuentras bugs o problemas dentro del período de soporte, los solucionamos sin costo adicional. También garantizamos que el código cumple con los estándares de calidad y mejores prácticas de la industria, incluyendo cumplimiento normativo para Health Tech.',
-  },
-  {
-    question: '¿Tienen experiencia en cumplimiento normativo para Health Tech?',
-    answer:
-      'Sí, tenemos experiencia en implementar soluciones que cumplen con regulaciones como HIPAA, GDPR, y normativas locales de salud. Trabajamos con seguridad de datos, encriptación, y auditorías para garantizar el cumplimiento normativo.',
-  },
+      'Sí, ofrecemos garantía de satisfacción. Si encuentras bugs o problemas dentro del período de soporte, los solucionamos sin costo adicional. También garantizamos que el código cumple con los estándares de calidad y mejores prácticas de la industria.',
+  }
+
 ]
 
 // Servicios
@@ -101,19 +97,13 @@ export const services: Service[] = [
     icon: 'fas fa-laptop-code',
     title: 'Desarrollo Web',
     description:
-      'Aplicaciones web modernas, progresivas y responsivas con las últimas tecnologías. Especializados en plataformas de salud digital.',
+      'Aplicaciones web modernas, progresivas y responsivas con las últimas tecnologías.',
   },
   {
     icon: 'fas fa-mobile-screen-button',
     title: 'Apps Móviles',
     description:
-      'Desarrollo nativo e híbrido para iOS y Android con experiencias de usuario excepcionales. Apps de telemedicina y gestión de salud.',
-  },
-  {
-    icon: 'fas fa-heartbeat',
-    title: 'Health Tech Solutions',
-    description:
-      'Sistemas especializados en salud: EHR, telemedicina, gestión de pacientes, integración con dispositivos médicos y más.',
+      'Desarrollo nativo e híbrido para iOS y Android con experiencias de usuario excepcionales.',
   },
   {
     icon: 'fas fa-pencil-ruler',
@@ -125,13 +115,13 @@ export const services: Service[] = [
     icon: 'fas fa-server',
     title: 'Backend & APIs',
     description:
-      'APIs robustas y escalables, integración con sistemas legacy, HL7/FHIR para interoperabilidad en salud.',
+      'APIs robustas y escalables, integración con sistemas legacy,APIs customizadas para cada proyecto.',
   },
   {
     icon: 'fas fa-cloud',
     title: 'DevOps & Cloud',
     description:
-      'Infraestructura cloud, CI/CD, monitoreo y despliegues automatizados. Cumplimiento con HIPAA y normativas de salud.',
+      'Infraestructura cloud, CI/CD, monitoreo y despliegues automatizados.',
   },
 ]
 
@@ -147,7 +137,7 @@ export const features: Feature[] = [
     icon: 'fas fa-shield-alt',
     title: 'Seguridad Integrada',
     description:
-      'Implementamos prácticas de seguridad desde el diseño inicial, protegiendo tus datos y los de tus clientes, especialmente crítico en Health Tech.',
+      'Implementamos prácticas de seguridad desde el diseño inicial, protegiendo tus datos y los de tus clientes.',
   },
   {
     icon: 'fas fa-mobile-alt',
