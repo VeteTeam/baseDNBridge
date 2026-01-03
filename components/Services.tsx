@@ -11,8 +11,8 @@ export default function Services() {
             Nuestros Servicios
           </h2>
           <p className="text-dark-gray max-w-2xl mx-auto text-lg leading-relaxed">
-            Ofrecemos un enfoque integral para el desarrollo de software, especializándonos en{' '}
-            <strong className="text-primary-blue">Health Tech</strong> y adaptándonos a las 
+            Ofrecemos un enfoque integral para el desarrollo de software.
+            Adaptándonos a las 
             necesidades específicas de cada cliente.
           </p>
         </div>

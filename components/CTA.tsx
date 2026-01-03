@@ -20,8 +20,7 @@ export default function CTA() {
         </h2>
         <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-white/85 leading-relaxed">
           Contáctanos hoy mismo para una reunión y descubre cómo podemos ayudar a hacer realidad tu 
-          idea. Nuestro equipo está listo para transformar tu visión en realidad, especialmente si 
-          trabajas en Health Tech.
+          idea. Nuestro equipo está listo para transformar tu visión en realidad.
         </p>
         <button
           onClick={openModal}

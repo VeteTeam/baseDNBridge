@@ -9,7 +9,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-6 text-primary-blue">{companyConfig.name}</h3>
             <p className="text-white/70 mb-5 leading-relaxed">
               Conectamos tus ideas con soluciones tecnológicas innovadoras. Transformando visiones 
-              en realidad digital, especializados en Health Tech.
+              en realidad digital.
             </p>
             <div className="flex gap-4 mt-5">
               {companyConfig.socialMedia.linkedin && (
@@ -72,14 +72,6 @@ export default function Footer() {
                   className="text-white/70 hover:text-primary-blue transition-all duration-300 inline-block hover:translate-x-1"
                 >
                   Apps Móviles
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#servicios"
-                  className="text-white/70 hover:text-primary-blue transition-all duration-300 inline-block hover:translate-x-1"
-                >
-                  Health Tech Solutions
                 </a>
               </li>
               <li>
