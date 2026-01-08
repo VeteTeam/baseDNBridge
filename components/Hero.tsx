@@ -45,18 +45,18 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-wrap justify-center items-center gap-10 opacity-70 animate-fade-in delay-600">
-          <div className="flex items-center gap-3 text-sm text-white/80">
+          {/* <div className="flex items-center gap-3 text-sm text-white/80">
             <i className="fas fa-shield-alt text-primary-blue text-xl"></i>
             <span>100% Seguro</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-white/80">
-            <i className="fas fa-users text-primary-blue text-xl"></i>
-            <span>+250 Clientes Satisfechos</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm text-white/80">
+          </div> */}
+          {/* <div className="flex items-center gap-3 text-sm text-white/80"> */}
+            {/* <i className="fas fa-users text-primary-blue text-xl"></i> */}
+            {/* <span>+250 Clientes Satisfechos</span> */}
+          {/* </div> */}
+          {/* <div className="flex items-center gap-3 text-sm text-white/80">
             <i className="fas fa-award text-primary-blue text-xl"></i>
             <span>Certificados & Premiados</span>
-          </div>
+          </div> */}
         </div>
       </div>
 

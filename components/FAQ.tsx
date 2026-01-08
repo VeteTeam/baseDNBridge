@@ -18,8 +18,7 @@ export default function FAQ() {
             Preguntas Frecuentes
           </h2>
           <p className="text-dark-gray max-w-2xl mx-auto text-lg leading-relaxed">
-            Encuentra respuestas a las preguntas más comunes sobre nuestros servicios, especialmente 
-            en el ámbito de Health Tech.
+            Encuentra respuestas a las preguntas más comunes sobre nuestros servicios.
           </p>
         </div>
 
