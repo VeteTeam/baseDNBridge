@@ -12,9 +12,7 @@ const contactSchema = z.object({
   email: z.string().email('Email inválido'),
   phone: z.string().optional(),
   company: z.string().optional(),
-  projectType: z.enum(['Health Tech', 'General', 'Other'], {
-    required_error: 'Por favor selecciona un tipo de proyecto',
-  }),
+  projectType: z.string().min(3, 'Por favor especifica el tipo de proyecto (mínimo 3 caracteres)'),
   message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
   budget: z.string().optional(),
   // Honeypot field para protección contra bots
@@ -149,18 +147,15 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         <label htmlFor="projectType" className="block text-sm font-medium text-primary-dark mb-2">
           Tipo de proyecto <span className="text-accent-orange">*</span>
         </label>
-        <select
+        <input
+          type="text"
           id="projectType"
           {...register('projectType')}
           className={`w-full px-4 py-3 rounded-lg border-2 transition-colors text-black ${
             errors.projectType ? 'border-red-500' : 'border-medium-gray focus:border-primary-blue'
-          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20 bg-white`}
-        >
-          <option value="" className="text-black">Selecciona un tipo</option>
-          <option value="Health Tech" className="text-black">Health Tech</option>
-          <option value="General" className="text-black">General</option>
-          <option value="Other" className="text-black">Otro</option>
-        </select>
+          } focus:outline-none focus:ring-2 focus:ring-primary-blue/20`}
+          placeholder="Ej: Gestor para inmobiliaria, App móvil, Sistema de facturación..."
+        />
         {errors.projectType && (
           <p className="mt-1 text-sm text-red-500">{errors.projectType.message}</p>
         )}

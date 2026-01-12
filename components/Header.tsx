@@ -107,15 +107,6 @@ export default function Header() {
                   Nosotros
                 </a>
               </li>
-              <li>
-                <a
-                  href="#contacto"
-                  onClick={(e) => scrollToSection(e, '#contacto')}
-                  className="text-primary-dark font-medium transition-all duration-300 relative hover:text-primary-blue after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary-blue after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Contacto
-                </a>
-              </li>
             </ul>
           </nav>
 
@@ -202,15 +193,6 @@ export default function Header() {
                     className="block py-3 px-4 text-primary-dark font-medium text-lg rounded-lg transition-all duration-300 hover:bg-primary-blue/10 hover:text-primary-blue"
                   >
                     Nosotros
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#contacto"
-                    onClick={(e) => scrollToSection(e, '#contacto')}
-                    className="block py-3 px-4 text-primary-dark font-medium text-lg rounded-lg transition-all duration-300 hover:bg-primary-blue/10 hover:text-primary-blue"
-                  >
-                    Contacto
                   </a>
                 </li>
               </ul>
