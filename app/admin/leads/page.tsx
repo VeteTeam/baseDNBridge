@@ -17,8 +17,7 @@ export default async function LeadsPage() {
   const user = await getAuthUser()
 
   if (!user) {
-    // ❌ No autenticado, redirigir a login
-    redirect('/admin/login')
+    redirect('/internal/auth')
   }
 
   // 📊 Obtener leads iniciales (primera página)
@@ -44,7 +43,7 @@ export default async function LeadsPage() {
     
     const { removeAuthCookie } = await import('@/lib/auth')
     await removeAuthCookie()
-    redirect('/admin/login')
+    redirect('/internal/auth')
   }
 
   return (
