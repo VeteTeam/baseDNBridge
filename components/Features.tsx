@@ -40,8 +40,7 @@ export default function Features() {
             ¿Por qué elegir DNBridge?
           </h2>
           <p className="text-dark-gray max-w-2xl mx-auto text-lg leading-relaxed">
-            Nuestro enfoque combina experiencia técnica con comprensión empresarial para ofrecer 
-            soluciones que realmente importan, especialmente en el sector de la salud.
+          Nuestro enfoque combina experiencia técnica con comprensión empresarial para ofrecer soluciones que realmente importan, resolviendo problemas complejos en cualquier mercado o modelo de negocio.
           </p>
         </div>
 

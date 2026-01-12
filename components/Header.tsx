@@ -91,15 +91,6 @@ export default function Header() {
               </li>
               <li>
                 <a
-                  href="#tecnologias"
-                  onClick={(e) => scrollToSection(e, '#tecnologias')}
-                  className="text-primary-dark font-medium transition-all duration-300 relative hover:text-primary-blue after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary-blue after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Tecnologías
-                </a>
-              </li>
-              <li>
-                <a
                   href="#proyectos"
                   onClick={(e) => scrollToSection(e, '#proyectos')}
                   className="text-primary-dark font-medium transition-all duration-300 relative hover:text-primary-blue after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary-blue after:transition-all after:duration-300 hover:after:w-full"
@@ -193,15 +184,6 @@ export default function Header() {
                     className="block py-3 px-4 text-primary-dark font-medium text-lg rounded-lg transition-all duration-300 hover:bg-primary-blue/10 hover:text-primary-blue"
                   >
                     Servicios
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#tecnologias"
-                    onClick={(e) => scrollToSection(e, '#tecnologias')}
-                    className="block py-3 px-4 text-primary-dark font-medium text-lg rounded-lg transition-all duration-300 hover:bg-primary-blue/10 hover:text-primary-blue"
-                  >
-                    Tecnologías
                   </a>
                 </li>
                 <li>
