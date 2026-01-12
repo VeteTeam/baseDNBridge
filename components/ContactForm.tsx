@@ -6,7 +6,6 @@ import { z } from 'zod'
 import { useState } from 'react'
 import { useToast } from '@/contexts/ToastContext'
 
-// Schema de validación con Zod
 const contactSchema = z.object({
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   email: z.string().email('Email inválido'),
@@ -15,7 +14,6 @@ const contactSchema = z.object({
   projectType: z.string().min(3, 'Por favor especifica el tipo de proyecto (mínimo 3 caracteres)'),
   message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
   budget: z.string().optional(),
-  // Honeypot field para protección contra bots
   website: z.string().max(0, 'Este campo debe estar vacío').optional(),
 })
 
@@ -47,7 +45,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
       await onSubmit(data)
       reset()
       
-      // 🎯 Mostrar notificación de éxito
       showToast(
         '¡Mensaje enviado exitosamente! Te responderemos pronto.',
         'success',
@@ -62,7 +59,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
       
       setSubmitError(errorMessage)
       
-      // 🎯 Mostrar notificación de error
       showToast(errorMessage, 'error', 6000)
     } finally {
       setIsSubmitting(false)
@@ -71,7 +67,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
-      {/* Honeypot field - oculto para bots */}
       <input
         type="text"
         {...register('website')}
@@ -80,7 +75,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         autoComplete="off"
       />
 
-      {/* Nombre */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-primary-dark mb-2">
           Nombre completo <span className="text-accent-orange">*</span>
@@ -97,7 +91,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
       </div>
 
-      {/* Email */}
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-primary-dark mb-2">
           Email <span className="text-accent-orange">*</span>
@@ -114,7 +107,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
       </div>
 
-      {/* Teléfono y Empresa en fila */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-primary-dark mb-2">
@@ -142,7 +134,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         </div>
       </div>
 
-      {/* Tipo de Proyecto */}
       <div>
         <label htmlFor="projectType" className="block text-sm font-medium text-primary-dark mb-2">
           Tipo de proyecto <span className="text-accent-orange">*</span>
@@ -161,7 +152,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         )}
       </div>
 
-      {/* Mensaje */}
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-primary-dark mb-2">
           Mensaje <span className="text-accent-orange">*</span>
@@ -184,7 +174,6 @@ export default function ContactForm({ onSubmit, onSuccess }: ContactFormProps) {
         </div>
       )}
 
-      {/* Botón de envío */}
       <button
         type="submit"
         disabled={isSubmitting}

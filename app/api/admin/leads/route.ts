@@ -6,17 +6,14 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(request: NextRequest) {
   try {
-    // 🔐 Verificar autenticación
     await requireAuth()
 
-    // 📊 Obtener parámetros de query para paginación y filtros
     const searchParams = request.nextUrl.searchParams
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '50')
-    const status = searchParams.get('status') // Filtro opcional por status
-    const search = searchParams.get('search') // Búsqueda en nombre, email, empresa
+    const page = Number.parseInt(searchParams.get('page') || '1')
+    const limit = Number.parseInt(searchParams.get('limit') || '50')
+    const status = searchParams.get('status')
+    const search = searchParams.get('search')
 
-    // 🎯 Construir condiciones de filtro
     const where: any = {}
 
     if (status) {
@@ -31,12 +28,11 @@ export async function GET(request: NextRequest) {
       ]
     }
 
-    // 📊 Obtener leads con paginación
     const [leads, total] = await Promise.all([
       prisma.lead.findMany({
         where,
         orderBy: {
-          createdAt: 'desc', // Más recientes primero
+          createdAt: 'desc',
         },
         skip: (page - 1) * limit,
         take: limit,
@@ -44,7 +40,6 @@ export async function GET(request: NextRequest) {
       prisma.lead.count({ where }),
     ])
 
-    // 📈 Calcular información de paginación
     const totalPages = Math.ceil(total / limit)
 
     return NextResponse.json(
@@ -60,7 +55,6 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     )
   } catch (error) {
-    // 🔐 Si el error es de autenticación, retornar 401
     if (error instanceof Error && error.message === 'No autenticado') {
       return NextResponse.json(
         { message: 'No autorizado. Por favor inicia sesión.' },
