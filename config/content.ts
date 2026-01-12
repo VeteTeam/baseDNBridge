@@ -33,6 +33,12 @@ export interface Technology {
   name: string
 }
 
+export interface AboutSection {
+  title: string
+  content: string[]
+  icon?: string
+}
+
 // Testimonios
 export const testimonials: Testimonial[] = [
   {
@@ -185,4 +191,35 @@ export const technologies: Technology[] = [
   { name: 'AWS' },
   { name: 'GITHUB' },
 ]
+
+// Sección Nosotros
+export const aboutContent = {
+  mainTitle: 'Sobre Nosotros',
+  subtitle: ' Vas a encontrar un poco de nuestra historia y nuestro viaje en el universo de la tecnologia.',
+  sections: [
+    {
+      title: 'Nuestra Historia',
+      content: [
+        'Somos una startup tecnológica impulsada por la pasión y la precisión. Fundada por un equipo de dos especialistas, nacimos con la misión de transformar ideas complejas en soluciones digitales de alto impacto.'
+      ],
+      icon: 'fas fa-history'
+    },
+    {
+      title: 'Nuestra Misión',
+      content: [
+        'Nuestro modelo combina lo mejor de dos mundos: desarrollamos productos propios diseñados para resolver problemas comunes del mercado y ofrecemos software a medida, adaptándonos a las necesidades específicas de cada proyecto.'
+      ],
+      icon: 'fas fa-bullseye'
+    },
+    {
+      title: 'Que nos Define',
+      content: [
+        '<strong>Foco Absoluto</strong>: No somos una fábrica masiva; seleccionamos nuestros proyectos para garantizar una atención dedicada y artesanal.',
+        '<strong>Compromiso con el Tiempo</strong>: Entendemos que en tecnología, llegar tarde es llegar mal. Cumplimos rigurosamente con nuestros plazos de entrega.',
+        '<strong>Adaptabilidad</strong>: Trabajamos con grupos reducidos de clientes para garantizar resultados excepcionales y una comunicación flexible.'
+      ],
+      icon: 'fas fa-heart'
+    }
+  ] as AboutSection[]
+}
 
