@@ -56,8 +56,7 @@ export default function LeadsTable({ initialLeads, initialPagination }: LeadsTab
       const response = await fetch(`/api/admin/leads?${params.toString()}`)
       
       if (response.status === 401) {
-        // No autenticado, redirigir a login
-        window.location.href = '/admin/login'
+        window.location.href = '/internal/auth'
         return
       }
 
@@ -144,7 +143,7 @@ export default function LeadsTable({ initialLeads, initialPagination }: LeadsTab
       const response = await fetch(`/api/admin/leads?${params.toString()}`)
       
       if (response.status === 401) {
-        window.location.href = '/admin/login'
+        window.location.href = '/internal/auth'
         return
       }
 

@@ -1,17 +1,9 @@
-// 🎯 Purpose: Endpoint protegido para obtener todos los leads
-// 🏗️ Architecture: GET endpoint con autenticación requerida
-// 🔧 Support Notes: Solo usuarios autenticados pueden acceder
-// 💡 Learning: Protección de rutas API con verificación de autenticación
 
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-/**
- * 🎯 GET /api/admin/leads
- * Obtiene todos los leads de la base de datos
- * Requiere autenticación
- */
+
 export async function GET(request: NextRequest) {
   try {
     // 🔐 Verificar autenticación

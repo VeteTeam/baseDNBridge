@@ -1,8 +1,3 @@
-// 🎯 Purpose: Página de login para administradores
-// 🏗️ Architecture: Client component con formulario de autenticación
-// 🔧 Support Notes: Ruta oculta, solo conocida por el equipo
-// 💡 Learning: Formulario controlado con manejo de errores y estados de carga
-
 'use client'
 
 import { useState } from 'react'
@@ -154,4 +149,3 @@ export default function LoginPage() {
     </div>
   )
 }
-
