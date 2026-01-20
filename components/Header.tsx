@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import ContactModal from './ContactModal'
 import { useContactModal } from '@/hooks/useContactModal'
 
@@ -71,10 +72,21 @@ export default function Header() {
       }`}
     >
       <div className="container-custom">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-2">
           {/* Logo */}
-          <div className="text-xl md:text-2xl font-bold text-primary-dark transition-transform duration-300 hover:scale-105 cursor-pointer">
-            DN<span className="text-primary-blue">Bridge</span>
+          <div className="flex items-center transition-transform duration-300 hover:scale-105 cursor-pointer">
+            <Image 
+              src="/images/logo2.png"
+              alt="DNBridge Logo"
+              width={118}
+              height={34}
+              className="h-28 md:h-32 w-auto object-contain"
+              style={{ 
+                imageRendering: 'high-quality',
+                maxHeight: '128px'
+              }}
+              priority
+            />
           </div>
 
           {/* Navegación Desktop - Oculto en mobile */}
@@ -153,8 +165,19 @@ export default function Header() {
           <div className="flex flex-col h-full">
             {/* Header del menú móvil */}
             <div className="flex justify-between items-center p-6 border-b-2 border-medium-gray">
-              <div className="text-xl font-bold text-primary-dark">
-                DN<span className="text-primary-blue">Bridge</span>
+              <div className="flex items-center">
+                <Image 
+                  src="/images/logo2.png"
+                  alt="DNBridge Logo"
+                  width={100}
+                  height={29}
+                  className="h-20 w-auto object-contain"
+                  style={{ 
+                    imageRendering: 'high-quality',
+                    maxHeight: '80px'
+                  }}
+                  priority
+                />
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
