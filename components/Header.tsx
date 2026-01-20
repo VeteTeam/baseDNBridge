@@ -82,7 +82,6 @@ export default function Header() {
               height={34}
               className="h-28 md:h-32 w-auto object-contain"
               style={{ 
-                imageRendering: 'high-quality',
                 maxHeight: '128px'
               }}
               priority
@@ -173,7 +172,6 @@ export default function Header() {
                   height={29}
                   className="h-20 w-auto object-contain"
                   style={{ 
-                    imageRendering: 'high-quality',
                     maxHeight: '80px'
                   }}
                   priority
