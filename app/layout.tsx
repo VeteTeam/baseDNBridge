@@ -7,8 +7,8 @@ import { ToastContainer } from '@/components/ToastContainer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'DNBridge - Software Factory | Health Tech Solutions',
-  description: 'DNBridge conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. Especialistas en Health Tech y desarrollo de software escalable.',
+  title: 'DNBridge - Software Factory',
+  description: 'DNBridge conecta tus visiones empresariales con soluciones tecnológicas de vanguardia. Especialistas en desarrollo de software escalable.',
 }
 
 interface RootLayoutProps {
